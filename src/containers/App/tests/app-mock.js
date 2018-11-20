@@ -1,6 +1,6 @@
-exports.getMessage = { message: 'hello world test' }
-exports.getAnotherMessage = { message: 'get the request 2 http request test' }
-exports.getBranchesPCP = {
+export const getMessage = { message: 'hello world test' }
+export const getAnotherMessage = { message: 'get the request 2 http request test' }
+export const getBranchesPCP = {
     "meta": {
         "server": "thiagobeserra-Latitude-3480",
         "offset": 0,
@@ -31,3 +31,5 @@ exports.getBranchesPCP = {
         }
     ]
 }
+
+// export {getMessage, getAnotherMessage, getBranchesPCP}

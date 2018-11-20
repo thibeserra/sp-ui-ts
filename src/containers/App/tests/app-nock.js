@@ -1,5 +1,5 @@
 import nock from 'nock'
-import mock from './app-mock'
+import * as mock from './app-mock'
 import { OK } from 'http-status';
 
 export function getMessage() {
