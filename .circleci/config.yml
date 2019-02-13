@@ -10,6 +10,9 @@ jobs:
       - run:
           name: Setup Dependencies
           command: npm install
+      - run:
+          name: Build static file project
+          command: npm run clean:static && npm run build
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
