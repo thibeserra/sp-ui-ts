@@ -1,41 +1,84 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - restore_cache: #special step to restore the dependency cache
-          key: dependency-cache-{{checksum "package.json" }}
-      - run:
-          name: Setup Dependencies
-          command: npm install
-      - run:
-          name: Build static file project
-          command: npm run clean:static && npm run build
-      - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-  test:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - restore_cache: #special step to restore the dependency cache
-          key: dependency-cache-{{checksum "package.json" }}
-      - run: # run tests
-          name: Run Test
-          command: npm run test
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build:
-          filters:
-            branches:
-              - master
-
-      - test:
-          requires:
-            - build
+{
+  "version": 2, 
+  "jobs": {
+    "test": {
+      "docker": [
+        {
+          "image": "circleci/node:8"
+        }
+      ], 
+      "steps": [
+        "checkout", 
+        {
+          "restore_cache": {
+            "key": "dependency-cache-{{checksum \"package.json\" }}"
+          }
+        }, 
+        {
+          "run": {
+            "command": "npm run test", 
+            "name": "Run Test"
+          }
+        }
+      ]
+    }, 
+    "build": {
+      "docker": [
+        {
+          "image": "circleci/node:8"
+        }
+      ], 
+      "steps": [
+        "checkout", 
+        {
+          "restore_cache": {
+            "key": "dependency-cache-{{checksum \"package.json\" }}"
+          }
+        }, 
+        {
+          "run": {
+            "command": "npm install", 
+            "name": "Setup Dependencies"
+          }
+        }, 
+        {
+          "run": {
+            "command": "npm run clean:static && npm run build", 
+            "name": "Build static file project"
+          }
+        }, 
+        {
+          "save_cache": {
+            "paths": [
+              "./node_modules"
+            ], 
+            "key": "dependency-cache-{{ checksum \"package.json\" }}"
+          }
+        }
+      ]
+    }
+  }, 
+  "workflows": {
+    "version": 2, 
+    "build_and_test": {
+      "jobs": [
+        {
+          "build": {
+            "filters": {
+              "branches": [
+                "master"
+              ]
+            }
+          }
+        }, 
+        {
+          "test": {
+            "requires": [
+              "build"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
