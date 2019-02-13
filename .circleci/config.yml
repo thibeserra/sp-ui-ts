@@ -35,8 +35,7 @@ workflows:
           filters:
             branches:
               only: 
-                master
-                teste
+                - master
       - test:
           requires:
             - build
