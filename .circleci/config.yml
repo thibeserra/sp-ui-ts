@@ -16,4 +16,4 @@ jobs:
             - ./node_modules
       - run: # run tests
           name: Run Test and Coverage
-          command: react-app-rewired test --env=jsdom --watchAll
+          command: npm run test:dev
