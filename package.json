@@ -25,6 +25,7 @@
     "typescript": "3.1.6"
   },
   "scripts": {
+    "start:static": "cd build && http-server -c-1",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test:dev": "react-app-rewired test --env=jsdom --watchAll",
