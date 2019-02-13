@@ -33,7 +33,8 @@ workflows:
     jobs:
       - build:
           filters:
-            branches: - master
+            branches:
+              - master
 
       - test:
           requires:
