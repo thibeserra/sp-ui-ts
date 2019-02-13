@@ -36,6 +36,7 @@ workflows:
             branches:
               only: 
                 master
+                teste
       - test:
           requires:
             - build
