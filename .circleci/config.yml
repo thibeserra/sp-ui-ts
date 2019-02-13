@@ -17,6 +17,13 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - restore_cache: #special step to restore the dependency cache
+          key: dependency-cache-{{checksum "package.json" }}
       - run: # run tests
-          name: Run Test and Coverage
+          name: Run Test
           command: npm run test
