@@ -19,6 +19,12 @@ references:
       name: Build static file project
       command: npm run clean:static && npm run build
 
+  npm_save_cache: &npm_save_cache
+    save_cache: # special step to save the dependency cache
+      key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          - ./node_modules
+
 version: 2
 jobs:
   build:
@@ -28,10 +34,7 @@ jobs:
       - <<: *npm_restore_cache
       - <<: *npm_setup_dependencies
       - <<: *npm_build_static_file_project
-      - save_cache: # special step to save the dependency cache
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
+      - <<: *npm_save_cache
   test:
     docker:
       - image: circleci/node:8
