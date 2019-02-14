@@ -9,6 +9,11 @@ references:
     restore_cache:
       key: dependency-cache-{{checksum "package.json" }}
 
+  npm_setup_dependencies: &npm_setup_dependencies
+    run:
+      name: Setup Dependencies
+      command: npm install
+
 version: 2
 jobs:
   build:
@@ -16,9 +21,7 @@ jobs:
     steps:
       - checkout
       - <<: *npm_restore_cache
-      - run:
-          name: Setup Dependencies
-          command: npm install
+      - <<: *npm_setup_dependencies
       - run:
           name: Build static file project
           command: npm run clean:static && npm run build
