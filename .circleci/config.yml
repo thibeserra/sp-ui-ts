@@ -1,8 +1,14 @@
+references:
+
+  defaults: &defaults
+    working_directory: ~/sp-ui-ts
+    docker:
+      - image: circleci/node:8
+
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/node:8
+    <<: *defaults
     steps:
       - checkout
       - restore_cache: #special step to restore the dependency cache
