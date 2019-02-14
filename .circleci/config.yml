@@ -18,7 +18,12 @@ references:
     run:
       name: Build static file project
       command: npm run clean:static && npm run build
-      
+
+  npm_save_cache: &npm_save_cache
+    save_cache:
+      key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          ./node_modules 
 
 version: 2
 jobs:
