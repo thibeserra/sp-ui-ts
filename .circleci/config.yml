@@ -5,14 +5,17 @@ references:
     docker:
       - image: circleci/node:8
 
+  npm_restore_cache: &npm_restore_cache
+    restore_cache:
+      key: dependency-cache-{{checksum "package.json" }}
+
 version: 2
 jobs:
   build:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: #special step to restore the dependency cache
-          key: dependency-cache-{{checksum "package.json" }}
+      - <<: *npm_restore_cache
       - run:
           name: Setup Dependencies
           command: npm install
