@@ -44,7 +44,6 @@ jobs:
     steps:
       - checkout
       - <<: *npm_restore_cache
-          key: dependency-cache-{{checksum "package.json" }}
       - <<: *npm_run_test
 workflows:
   version: 2
