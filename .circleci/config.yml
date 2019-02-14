@@ -13,6 +13,11 @@ references:
     run:
       name: Setup Dependencies
       command: npm install
+  
+  npm_build_static_file_project: &npm_build_static_file_project
+    run:
+      name: Build static file project
+      command: npm run clean:static && npm run build
 
 version: 2
 jobs:
@@ -22,9 +27,7 @@ jobs:
       - checkout
       - <<: *npm_restore_cache
       - <<: *npm_setup_dependencies
-      - run:
-          name: Build static file project
-          command: npm run clean:static && npm run build
+      - <<: *npm_build_static_file_project
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
